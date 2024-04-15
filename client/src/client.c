@@ -45,6 +45,7 @@ int main(void)
 
 	/* ---------------- LEER DE CONSOLA ---------------- */
 
+	printf("leo por consola y solo loggeo hasta eviar un string vacio \n");
 	leer_consola(logger);
 
 	/*---------------------------------------------------PARTE 3-------------------------------------------------------------*/
@@ -54,12 +55,35 @@ int main(void)
 	// Creamos una conexión hacia el servidor
 	conexion = crear_conexion(ip, puerto);
 
+	/////////////////////////////HANDSHAKE/////////////////////////////
+
+	size_t bytes;
+
+	int32_t handshake = 1;
+	int32_t result;
+
+	bytes = send(conexion, &handshake, sizeof(int32_t), 0);
+	bytes = recv(conexion, &result, sizeof(int32_t), MSG_WAITALL);
+
+	if (result == 0) {
+		// Handshake OK
+		printf("el handshake se realizó correctamente \n");
+	} else {
+		// Handshake ERROR
+		printf("falló el handshake \n");
+	}
+	
+	/////////////////////////////HANDSHAKE/////////////////////////////
+	
 	// Enviamos al servidor el valor de CLAVE como mensaje
+	printf("envio al servidor el valor de CLAVE como mensaje \n");
 	enviar_mensaje(valor, conexion);
 
 	// Armamos y enviamos el paquete
+	printf("empiezo a armar el paquete que luego le envio al servidor con un string vacio \n");
 	paquete(conexion);
 
+	printf("llego a esta linea y se termina el programa \n");
 	terminar_programa(conexion, logger, config);
 
 	/*---------------------------------------------------PARTE 5-------------------------------------------------------------*/
