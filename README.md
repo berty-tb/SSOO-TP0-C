@@ -1,4 +1,4 @@
-# Sistemas Operativos - TP0
+# Sistemas Operativos - TP0 - C
 
 ## ¿De qué trata?
 
